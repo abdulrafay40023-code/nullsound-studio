@@ -1,0 +1,21 @@
+# Temporary and scratch scripts
+download_*.py
+search_*.py
+extract_*.py
+filter_*.py
+find_*.py
+get_*.py
+inspect_*.py
+test_*.py
+check_*.py
+verify_*.py
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Local deployment metadata
+.vercel/
+*.log
+*.tmp
+audio/test_slice.m4a

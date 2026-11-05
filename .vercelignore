@@ -1,0 +1,9 @@
+*.py
+*.pyc
+__pycache__
+*.log
+*.tmp
+.git
+.gitignore
+README.md
+audio/test_slice.m4a

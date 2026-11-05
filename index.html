@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NullSound Studio Pro — Complete Mega Audio Suite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #07090e;
+            --bg-surface: #0e131d;
+            --bg-card: #141b29;
+            --bg-hover: #1c263a;
+            --border: #212c40;
+            --accent: #00f2fe;
+            --gold: #f5af19;
+            --crimson: #ff2a5f;
+            --green: #05d686;
+            --purple: #9d4edd;
+            --text-main: #f0f4fc;
+            --text-muted: #8393ad;
+            --radius-lg: 16px;
+            --radius-md: 10px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 24px 20px 60px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1240px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-icon {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, var(--crimson), #ff7e5f);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            box-shadow: 0 0 25px rgba(255, 42, 95, 0.35);
+        }
+
+        .brand-title {
+            font-size: 26px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #ffffff, #68d8d6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .badge-status {
+            background: rgba(5, 214, 134, 0.12);
+            border: 1px solid rgba(5, 214, 134, 0.4);
+            color: var(--green);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--green);
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        /* Top Master Player */
+        .player-bar {
+            background: linear-gradient(135deg, #111724, #162033);
+            border: 1px solid #283750;
+            border-radius: var(--radius-lg);
+            padding: 20px 24px;
+            margin-bottom: 25px;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .player-top-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex: 1;
+        }
+
+        .player-icon {
+            font-size: 30px;
+            width: 52px;
+            height: 52px;
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .player-meta h4 {
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 3px;
+        }
+
+        .player-meta p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .visualizer-canvas {
+            width: 280px;
+            height: 48px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.35);
+        }
+
+        .scrubber-wrap {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .time-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--accent);
+            min-width: 100px;
+        }
+
+        .progress-bar-container {
+            flex: 1;
+            height: 10px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), var(--crimson));
+            border-radius: 5px;
+            transition: width 0.1s linear;
+        }
+
+        /* Filter Tabs */
+        .tabs-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .filter-tab {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-tab:hover {
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .filter-tab.active {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* Section Title */
+        .section-header {
+            margin: 25px 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-header h2 {
+            font-size: 20px;
+            color: #fff;
+            font-weight: 800;
+        }
+
+        .section-badge {
+            background: rgba(157, 78, 221, 0.2);
+            border: 1px solid rgba(157, 78, 221, 0.4);
+            color: #c77dff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+
+        /* Sound Grid */
+        .sound-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .sound-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            transition: all 0.22s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .sound-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 242, 254, 0.12);
+        }
+
+        .sound-card.movie-slice {
+            border: 1px solid rgba(157, 78, 221, 0.35);
+            background: linear-gradient(145deg, #131221, #18162e);
+        }
+
+        .sound-card.movie-slice:hover {
+            border-color: #9d4edd;
+            box-shadow: 0 10px 25px rgba(157, 78, 221, 0.25);
+        }
+
+        .sound-card.active-card {
+            border-color: var(--accent) !important;
+            background: linear-gradient(145deg, #131b2b, #19243a) !important;
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.22) !important;
+        }
+
+        .sound-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sound-icon {
+            font-size: 26px;
+        }
+
+        .sound-tag {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .tag-official { background: rgba(157, 78, 221, 0.2); color: #d1b3ff; border: 1px solid rgba(157, 78, 221, 0.4); }
+        .tag-monster { background: rgba(255, 42, 95, 0.16); color: #ff5277; border: 1px solid rgba(255, 42, 95, 0.3); }
+        .tag-crash { background: rgba(245, 175, 25, 0.16); color: var(--gold); border: 1px solid rgba(245, 175, 25, 0.3); }
+        .tag-chase { background: rgba(0, 242, 254, 0.16); color: var(--accent); border: 1px solid rgba(0, 242, 254, 0.3); }
+        .tag-jungle { background: rgba(5, 214, 134, 0.16); color: var(--green); border: 1px solid rgba(5, 214, 134, 0.3); }
+        .tag-suspense { background: rgba(157, 78, 221, 0.16); color: #c77dff; border: 1px solid rgba(157, 78, 221, 0.3); }
+
+        .duration-pill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            background: rgba(255,255,255,0.06);
+            color: #00f2fe;
+            padding: 4px 9px;
+            border-radius: 6px;
+            border: 1px solid rgba(0, 242, 254, 0.25);
+        }
+
+        .sound-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .sound-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-play-card {
+            flex: 1.4;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-play-card:hover {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+        }
+
+        .btn-play-card.playing {
+            background: var(--crimson);
+            color: #fff;
+            border-color: var(--crimson);
+            box-shadow: 0 0 15px rgba(255, 42, 95, 0.4);
+        }
+
+        .btn-dl-card {
+            flex: 1;
+            background: rgba(245, 175, 25, 0.12);
+            border: 1px solid rgba(245, 175, 25, 0.3);
+            color: var(--gold);
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-dl-card:hover {
+            background: var(--gold);
+            color: #000;
+        }
+
+        /* Movie Banner */
+        .movie-banner {
+            background: linear-gradient(135deg, rgba(157, 78, 221, 0.22), rgba(114, 9, 183, 0.16));
+            border: 1px solid rgba(157, 78, 221, 0.55);
+            border-radius: var(--radius-lg);
+            padding: 18px 24px;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 8px 30px rgba(157, 78, 221, 0.2);
+        }
+
+        .movie-banner .banner-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .movie-banner .banner-star {
+            width: 46px;
+            height: 46px;
+            background: rgba(245, 175, 25, 0.2);
+            border: 1px solid rgba(245, 175, 25, 0.45);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--gold);
+            flex-shrink: 0;
+        }
+
+        .movie-banner h3 {
+            font-size: 17px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .movie-banner p {
+            font-size: 12.5px;
+            color: #d1b3ff;
+            line-height: 1.4;
+        }
+
+        .banner-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .btn-banner-play {
+            background: linear-gradient(135deg, #9d4edd, #7209b7);
+            color: #fff;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 15px rgba(157, 78, 221, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-banner-play:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(157, 78, 221, 0.65);
+        }
+
+        .btn-banner-play.playing {
+            background: var(--crimson);
+            box-shadow: 0 0 15px rgba(255, 42, 95, 0.5);
+        }
+
+        .btn-banner-dl {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 11px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-banner-dl:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: #fff;
+        }
+
+        @media (max-width: 850px) {
+            .movie-banner { flex-direction: column; align-items: stretch; }
+            .banner-actions { justify-content: stretch; }
+            .btn-banner-play, .btn-banner-dl { flex: 1; text-align: center; justify-content: center; }
+            .player-top-row { flex-direction: column; align-items: stretch; }
+            .visualizer-canvas { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo-wrap">
+            <div class="logo-icon">🎬</div>
+            <div>
+                <div class="brand-title">NullSound Studio Pro</div>
+                <div class="brand-subtitle">Complete Sound Suite: Full 21m Movie + 8 Null Hour Scene Slices + 38 Hollywood Master SFX (Total 46 Tracks)</div>
+            </div>
+        </div>
+        <div class="badge-status">
+            <span class="status-dot"></span>
+            <span>All 46 Master Audio Tracks Ready</span>
+        </div>
+    </header>
+
+    <!-- Top Movie Banner (Full 21m Master Track) -->
+    <div class="movie-banner" id="banner-movie">
+        <div class="banner-left">
+            <div class="banner-star">★</div>
+            <div class="banner-text">
+                <h3>Original NULL HOUR Movie Full Audio Track (21m 54s)</h3>
+                <p>Direct from viral hit video (xRQG07hiLr0, 9.6M views): Listen to the exact atmospheric music, creature sounds &amp; timing used in the movie!</p>
+            </div>
+        </div>
+        <div class="banner-actions">
+            <button class="btn-banner-play" onclick="playTrack('audio/nullhour_original_movie_audio.m4a', 'NULL HOUR Full Movie Master Audio (21m 54s)', 'Direct 21-minute movie soundtrack, ambient rain, creature roars &amp; suspense timing', '🎬', 'banner-movie')">▶ Play Full Movie (21m 54s)</button>
+            <a class="btn-banner-dl" href="audio/nullhour_original_movie_audio.m4a" download="nullhour_original_movie_audio.m4a">📥 Download Movie Audio (20MB)</a>
+        </div>
+    </div>
+
+    <!-- Top Master Player & Scrubber -->
+    <div class="player-bar">
+        <div class="player-top-row">
+            <div class="player-info">
+                <div class="player-icon" id="now-icon">🎧</div>
+                <div class="player-meta">
+                    <h4 id="now-title">Click 'Play' On Any Sound Below</h4>
+                    <p id="now-desc">Direct high-fidelity audio stream with live seekable scrubber</p>
+                </div>
+            </div>
+            <canvas id="visualizer" class="visualizer-canvas"></canvas>
+        </div>
+        <div class="scrubber-wrap">
+            <span class="time-label" id="time-display">00:00 / 00:00</span>
+            <div class="progress-bar-container" id="progress-container" onclick="seekAudio(event)">
+                <div class="progress-bar-fill" id="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Native Audio Tag -->
+    <audio id="native-audio" preload="auto"></audio>
+
+    <!-- Category Filter Tabs -->
+    <div class="tabs-row">
+        <button class="filter-tab active" onclick="filterSounds('all', this)">All Master Sounds (46)</button>
+        <button class="filter-tab" onclick="filterSounds('official', this)">⭐ Null Hour Movie Slices (8)</button>
+        <button class="filter-tab" onclick="filterSounds('dragon', this)">🐉 Dragon &amp; Apex Roars (7)</button>
+        <button class="filter-tab" onclick="filterSounds('crash', this)">💥 Tree Crashes &amp; Impacts (7)</button>
+        <button class="filter-tab" onclick="filterSounds('chase', this)">🏃‍♀️ Girl Running &amp; Chase Foley (8)</button>
+        <button class="filter-tab" onclick="filterSounds('swamp', this)">🐊 Swamp &amp; Crocodile (3)</button>
+        <button class="filter-tab" onclick="filterSounds('jungle', this)">🌧️ Jungle, Rain &amp; Storms (6)</button>
+        <button class="filter-tab" onclick="filterSounds('suspense', this)">💓 Suspense, Drums &amp; Braams (7)</button>
+    </div>
+
+    <!-- ================= PART 1: EXACT NULL HOUR MOVIE CUTS ================= -->
+    <div id="sec-official">
+    <div class="section-header">
+        <h2>⭐ Asli NULL HOUR Movie Se Cut Kiye Gaye Exact Scene Clips (8 Scenes)</h2>
+        <span class="section-badge">100% Original Audio</span>
+    </div>
+
+    <div class="sound-grid">
+
+        <!-- 1. Pure Movie Background Soundtrack Loop (90s) -->
+        <div class="sound-card movie-slice" data-cat="official" id="card-nh-music">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🎵</span>
+                        <span class="sound-tag tag-official">Movie Music Track</span>
+                    </div>
+                    <span class="duration-pill">⏱ 90s</span>
+                </div>
+                <div class="sound-name">Null Hour Official Movie Background Music</div>
+                <div class="sound-desc">Movie ka pure continuous background soundtrack: Deep ambient suspense, dark cello drone aur slow cinematic mystery (CapCut Track 2 ke liye perfect).</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/nh_movie_official_cinematic_score.m4a', 'Null Hour Official Movie Music', '90s continuous atmospheric soundtrack', '🎵', 'card-nh-music')">▶ Play (90s)</button>
+                <a class="btn-dl-card" href="audio/nh_movie_official_cinematic_score.m4a" download="nh_movie_music_loop.m4a">📥 Download M4A</a>
+            </div>
+        </div>
+
+        <!-- 2. Colossal Dragon Roar & Climax Beast (80s) -->
+        <div class="sound-card movie-slice" data-cat="official" id="card-nh-dragon">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🐉</span>
+                        <span class="sound-tag tag-official">Dragon Roar Part</span>
+                    </div>
+                    <span class="duration-pill">⏱ 80s</span>
+                </div>
+                <div class="sound-name">Null Hour Colossal Dragon Reveal &amp; Deep Roars</div>
+                <div class="sound-desc">Asli movie ka dragon reveal scene: Cavern reverberation, deep guttural alpha beast roars, aur massive chest-shaking predator echoes!</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/nh_movie_dragon_colossal_roar.m4a', 'Null Hour Colossal Dragon Roars', '80s monster approach and deep cavern roars', '🐉', 'card-nh-dragon')">▶ Play (80s)</button>
+                <a class="btn-dl-card" href="audio/nh_movie_dragon_colossal_roar.m4a" download="nh_movie_dragon_roars.m4a">📥 Download M4A</a>
+            </div>
+        </div>
+
+        <!-- 3. Full Chase Scene: Girl Running + Monster Pursuit (90s) -->
+        <div class="sound-card movie-slice" data-cat="official" id="card-nh-chase">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🏃‍♀️</span>
+                        <span class="sound-tag tag-official">Chase Scene Part</span>
+                    </div>
+                    <span class="duration-pill">⏱ 90s</span>
+                </div>
+                <div class="sound-name">Null Hour Intense Pursuit (Girl + Beast Behind)</div>
+                <div class="sound-desc">Asli movie ka chase scene: Larki ke bhaagne ke qadam, dar se saansein phoolna, aur theek peeche monster ka zameen hilate hue darakht todna!</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/nh_movie_intense_chase_sequence.m4a', 'Null Hour Intense Pursuit Chase', '90s full chase: girl running + monster stomping behind', '🏃‍♀️', 'card-nh-chase')">▶ Play (90s)</button>
+                <a class="btn-dl-card" href="audio/nh_movie_intense_chase_sequence.m4a" download="nh_movie_chase_sequence.m4a">📥 Download M4A</a>
+            </div>
+        </div>
+
+        <!-- 4. Tree Crash & Monster Collisions (90s) -->
+        <div class="sound-card movie-slice" data-cat="official" id="card-nh-tree">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🪵</span>
+                        <span class="sound-tag tag-official">Destruction Part</span>
+                    </div>
+                    <span class="duration-pill">⏱ 90s</span>
+                </div>
+                <div class="sound-name">Null Hour Tree Destruction &amp; Monster Crashes</div>
+                <div class="sound-desc">Asli movie me monster ka darakhton par takrana, shaakhain todna, pathar girna aur bhayanak physical destruction collisions.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/nh_movie_tree_crash_destruction.m4a', 'Null Hour Tree Destruction & Crashes', '90s tree smashing and monster collision destruction', '🪵', 'card-nh-tree')">▶ Play (90s)</button>
+                <a class="btn-dl-card" href="audio/nh_movie_tree_crash_destruction.m4a" download="nh_movie_tree_destruction.m4a">📥 Download M4A</a>
+            </div>
+        </div>
+
+        <!-- 5. Swamp & Prehistoric Crocodile Attack (75s) -->
+        <div class="sound-card movie-slice" data-cat="official" id="card-nh-swamp">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🐊</span>
+                        <span class="sound-tag tag-official">Swamp Part</span>
+                    </div>
+                    <span class="duration-pill">⏱ 75s</span>
+                </div>
+                <div class="sound-name">Null Hour Swamp &amp; Crocodile Ambush</div>
+                <div class="sound-desc">Daldal ka sinister mahol, paani me qadam, aur achanak crocodile ka paani se nikal kar lunge marne aur attack karne ka scene.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/nh_movie_swamp_crocodile_attack.m4a', 'Null Hour Swamp & Crocodile Ambush', '75s swamp foley and crocodile attack', '🐊', 'card-nh-swamp')">▶ Play (75s)</button>
+                <a class="btn-dl-card" href="audio/nh_movie_swamp_crocodile_attack.m4a" download="nh_movie_swamp_crocodile.m4a">📥 Download M4A</a>
+            </div>
+        </div>
+
+        <!-- 6. Monkey Backpack Theft & Forest Scramble (60s) -->
+        <div class="sound-card movie-slice" data-cat="official" id="card-nh-monkey">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🐒</span>
+                        <span class="sound-tag tag-official">Monkey Theft Part</span>
+                    </div>
+                    <span class="duration-pill">⏱ 60s</span>
+                </div>
+                <div class="sound-name">Null Hour Monkey Backpack Theft &amp; Chatter</div>
+                <div class="sound-desc">Darakht se aakar bag cheenne wala scene: Bandar ki chattering cheekh, shaakhain jhulana aur larki ka peeche bhagna.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/nh_movie_monkey_theft_canopy.m4a', 'Null Hour Monkey Backpack Theft', '60s monkey chatter and canopy theft', '🐒', 'card-nh-monkey')">▶ Play (60s)</button>
+                <a class="btn-dl-card" href="audio/nh_movie_monkey_theft_canopy.m4a" download="nh_movie_monkey_theft.m4a">📥 Download M4A</a>
+            </div>
+        </div>
+
+        <!-- 7. Temple Ruins & Panic Heartbeat (90s) -->
+        <div class="sound-card movie-slice" data-cat="official" id="card-nh-temple">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🫀</span>
+                        <span class="sound-tag tag-official">Temple Part</span>
+                    </div>
+                    <span class="duration-pill">⏱ 90s</span>
+                </div>
+                <div class="sound-name">Null Hour Temple Cavern &amp; Heartbeat Dread</div>
+                <div class="sound-desc">Ancient temple ruins me dakhila, ghaar ki hawa, aur larki ke seene me dharakta sub-bass dil jab monster paas se guzarta hai.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/nh_movie_temple_heartbeat_suspense.m4a', 'Null Hour Temple Ruins & Heartbeat', '90s ruins ambiance and panic heartbeat', '🫀', 'card-nh-temple')">▶ Play (90s)</button>
+                <a class="btn-dl-card" href="audio/nh_movie_temple_heartbeat_suspense.m4a" download="nh_movie_temple_heartbeat.m4a">📥 Download M4A</a>
+            </div>
+        </div>
+
+        <!-- 8. Jungle Entry & Rainforest Rain (90s) -->
+        <div class="sound-card movie-slice" data-cat="official" id="card-nh-intro">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🌧️</span>
+                        <span class="sound-tag tag-official">Jungle Entry Part</span>
+                    </div>
+                    <span class="duration-pill">⏱ 90s</span>
+                </div>
+                <div class="sound-name">Null Hour Jungle Entry &amp; Rain Ambience</div>
+                <div class="sound-desc">Movie ka opening 90 seconds: Dense jungle rain, patton par musladhar barish aur mystery ambience (Track 1 ke liye ready).</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/nh_movie_intro_exploration_music.m4a', 'Null Hour Jungle Entry & Rain', '90s rainforest rain and exploration ambience', '🌧️', 'card-nh-intro')">▶ Play (90s)</button>
+                <a class="btn-dl-card" href="audio/nh_movie_intro_exploration_music.m4a" download="nh_movie_jungle_entry.m4a">📥 Download M4A</a>
+            </div>
+        </div>
+
+    </div>
+    </div> <!-- end sec-official -->
+
+    <!-- ================= PART 2: 38 HOLLYWOOD MASTER SOUND FX ================= -->
+    <div id="sec-hollywood">
+    <div class="section-header">
+        <h2>🎬 Hollywood Master Sound Effects &amp; Foley Suite (38 Tracks)</h2>
+        <span class="section-badge">Hollywood Soundstage Recordings</span>
+    </div>
+
+    <div class="sound-grid">
+
+        <!-- ================= TREE CRASHES, FALLS & IMPACTS ================= -->
+
+        <!-- 9. Tree Crash Wood Smash (14.1s) -->
+        <div class="sound-card" data-cat="crash" id="card-tree-crash">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🪵</span>
+                        <span class="sound-tag tag-crash">Tree Smash</span>
+                    </div>
+                    <span class="duration-pill">⏱ 14.1s</span>
+                </div>
+                <div class="sound-name">Monster Crashing Into Giant Jungle Tree</div>
+                <div class="sound-desc">Multi-ton monster body slamming into heavy tree trunk, explosive wood fracturing, and crashing branches.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/tree_crash_wood_smash.mp3', 'Monster Crashing Into Giant Jungle Tree', '14.1s massive wood fracture and tree crash', '🪵', 'card-tree-crash')">▶ Play (14s)</button>
+                <a class="btn-dl-card" href="audio/tree_crash_wood_smash.mp3" download="tree_crash_wood_smash.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 10. Jungle Wood Splintering (30.6s) -->
+        <div class="sound-card" data-cat="crash" id="card-wood-frac">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🌲</span>
+                        <span class="sound-tag tag-crash">Wood Fracture</span>
+                    </div>
+                    <span class="duration-pill">⏱ 30.6s</span>
+                </div>
+                <div class="sound-name">Dense Canopy Tree Splintering &amp; Collapse</div>
+                <div class="sound-desc">Full 30-second sequence of thick branches breaking, wood splintering, and collapsing forest canopy.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/jungle_wood_fracture.mp3', 'Dense Canopy Tree Splintering', '30.6s continuous wood fracturing in jungle', '🌲', 'card-wood-frac')">▶ Play (31s)</button>
+                <a class="btn-dl-card" href="audio/jungle_wood_fracture.mp3" download="jungle_wood_fracture.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 11. Heavy Impact Shockwave (8.4s) -->
+        <div class="sound-card" data-cat="crash" id="card-shockwave">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">💥</span>
+                        <span class="sound-tag tag-crash">Impact Shockwave</span>
+                    </div>
+                    <span class="duration-pill">⏱ 8.4s</span>
+                </div>
+                <div class="sound-name">Heavy Monster Wall Smash &amp; Shockwave</div>
+                <div class="sound-desc">Brutal subterranean impact shockwave when dragon smashes against stone ruins or cliffside.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/heavy_impact_shockwave.mp3', 'Heavy Monster Wall Smash', '8.4s heavy impact shockwave and collision echo', '💥', 'card-shockwave')">▶ Play (8s)</button>
+                <a class="btn-dl-card" href="audio/heavy_impact_shockwave.mp3" download="heavy_impact_shockwave.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 12. Golem Earth Slam (8.2s) -->
+        <div class="sound-card" data-cat="crash" id="card-earth-slam">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🔨</span>
+                        <span class="sound-tag tag-crash">Ground Slam</span>
+                    </div>
+                    <span class="duration-pill">⏱ 8.2s</span>
+                </div>
+                <div class="sound-name">Monster Seismic Ground Slam &amp; Body Thud</div>
+                <div class="sound-desc">Heavy downward ground slam vibrating dirt, debris, and soil as monster strikes.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/golem_earth_slam.mp3', 'Monster Ground Slam', '8.2s seismic ground slam and thud', '🔨', 'card-earth-slam')">▶ Play (8s)</button>
+                <a class="btn-dl-card" href="audio/golem_earth_slam.mp3" download="golem_earth_slam.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 13. Rocks & Stone Debris Falling (6.9s) -->
+        <div class="sound-card" data-cat="crash" id="card-rocks">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🪨</span>
+                        <span class="sound-tag tag-crash">Falling Debris</span>
+                    </div>
+                    <span class="duration-pill">⏱ 6.9s</span>
+                </div>
+                <div class="sound-name">Collapsing Temple Rocks &amp; Falling Debris</div>
+                <div class="sound-desc">Heavy crumbling stone blocks falling, clattering and smashing after beast crashes into ruins.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/rocks_debris_falling.mp3', 'Collapsing Temple Rocks', '6.9s crumbling stones and falling debris', '🪨', 'card-rocks')">▶ Play (7s)</button>
+                <a class="btn-dl-card" href="audio/rocks_debris_falling.mp3" download="rocks_debris_falling.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 14. Monster Dying Collapse (13.7s) -->
+        <div class="sound-card" data-cat="crash" id="card-dying">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">💀</span>
+                        <span class="sound-tag tag-monster">Monster Fall</span>
+                    </div>
+                    <span class="duration-pill">⏱ 13.7s</span>
+                </div>
+                <div class="sound-name">Monster Defeat, Agony &amp; Ground Collapse</div>
+                <div class="sound-desc">Beast groaning in pain, collapsing heavily onto the forest floor with dying breath.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/monster_dying_collapse.mp3', 'Monster Defeat & Collapse', '13.7s monster defeat groan and collapse', '💀', 'card-dying')">▶ Play (14s)</button>
+                <a class="btn-dl-card" href="audio/monster_dying_collapse.mp3" download="monster_dying_collapse.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 15. Monster Body Slam Mud (1.5s) -->
+        <div class="sound-card" data-cat="crash" id="card-slam-mud">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">💥</span>
+                        <span class="sound-tag tag-crash">Body Slam</span>
+                    </div>
+                    <span class="duration-pill">⏱ 1.5s</span>
+                </div>
+                <div class="sound-name">Heavy Monster Body Slam Into Mud</div>
+                <div class="sound-desc">Violent impact thud as a massive creature falls and slams into thick wet jungle mud.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/monster_body_slam_mud.mp3', 'Heavy Body Slam Into Mud', '1.5s wet mud impact thud', '💥', 'card-slam-mud')">▶ Play (2s)</button>
+                <a class="btn-dl-card" href="audio/monster_body_slam_mud.mp3" download="monster_body_slam_mud.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- ================= REAL DRAGON & APEX ROARS ================= -->
+
+        <!-- 16. Big Wild Beast Roar (15.2s) -->
+        <div class="sound-card" data-cat="dragon" id="card-big-beast">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🦖</span>
+                        <span class="sound-tag tag-monster">Alpha Predator</span>
+                    </div>
+                    <span class="duration-pill">⏱ 15.2s</span>
+                </div>
+                <div class="sound-name">Colossal Predator Deep Throat Roar</div>
+                <div class="sound-desc">Ultra-deep guttural acoustic throat roar with low chest frequencies and zero electronic synth.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/big_wild_beast_roar.mp3', 'Colossal Predator Deep Roar', '15.2s ultra-deep guttural predator roar', '🦖', 'card-big-beast')">▶ Play (15s)</button>
+                <a class="btn-dl-card" href="audio/big_wild_beast_roar.mp3" download="big_wild_beast_roar.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 17. Ancient Colossal Dragon Roar (25.2s) -->
+        <div class="sound-card" data-cat="dragon" id="card-1">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🐉</span>
+                        <span class="sound-tag tag-monster">Dragon Climax</span>
+                    </div>
+                    <span class="duration-pill">⏱ 25.2s</span>
+                </div>
+                <div class="sound-name">Ancient Colossal Dragon Roar &amp; Cavern Echo</div>
+                <div class="sound-desc">Chest breathing, deep guttural roar, massive reverberating cavern echo across jungle cliffs.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/dragon_deep_roar.mp3', 'Ancient Colossal Dragon Roar', '25.2s creature roar with cavern echo', '🐉', 'card-1')">▶ Play (25s)</button>
+                <a class="btn-dl-card" href="audio/dragon_deep_roar.mp3" download="dragon_deep_roar.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 18. Giant Monster Roar Alpha (7.6s) -->
+        <div class="sound-card" data-cat="dragon" id="card-alpha-roar">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🦁</span>
+                        <span class="sound-tag tag-monster">Close-Up Roar</span>
+                    </div>
+                    <span class="duration-pill">⏱ 7.6s</span>
+                </div>
+                <div class="sound-name">Giant Alpha Monster Face-to-Face Roar</div>
+                <div class="sound-desc">Terrifying face-to-face roar when beast confronts heroine directly before the chase.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/giant_monster_roar_alpha.mp3', 'Giant Alpha Face-to-Face Roar', '7.6s aggressive close-up monster roar', '🦁', 'card-alpha-roar')">▶ Play (8s)</button>
+                <a class="btn-dl-card" href="audio/giant_monster_roar_alpha.mp3" download="giant_monster_roar_alpha.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 19. Aggressive Beast Attack Snarl (6.4s) -->
+        <div class="sound-card" data-cat="dragon" id="card-snarl">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">👹</span>
+                        <span class="sound-tag tag-monster">Lunge Attack</span>
+                    </div>
+                    <span class="duration-pill">⏱ 6.4s</span>
+                </div>
+                <div class="sound-name">Aggressive Beast Attack Snarl &amp; Snap</div>
+                <div class="sound-desc">Fast savage lunge snarl with bone snapping jaws as monster strikes at the camera.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/aggressive_beast_attack.mp3', 'Aggressive Beast Attack Snarl', '6.4s savage lunge snarl and jaw snap', '👹', 'card-snarl')">▶ Play (6s)</button>
+                <a class="btn-dl-card" href="audio/aggressive_beast_attack.mp3" download="aggressive_beast_attack.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 20. Dragon Fire Breath & Blast (8.6s) -->
+        <div class="sound-card" data-cat="dragon" id="card-fire">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🔥</span>
+                        <span class="sound-tag tag-monster">Fire Breath</span>
+                    </div>
+                    <span class="duration-pill">⏱ 8.6s</span>
+                </div>
+                <div class="sound-name">Dragon Fire Breath &amp; Flame Blast</div>
+                <div class="sound-desc">Deep throat ignition, sudden massive fireball whoosh, and violent crackling inferno.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/dragon_fire_breath.mp3', 'Dragon Fire Breath', '8.6s fire breath and flame blast', '🔥', 'card-fire')">▶ Play (9s)</button>
+                <a class="btn-dl-card" href="audio/dragon_fire_breath.mp3" download="dragon_fire_breath.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 21. Winged Screech & Flight Swoop (24.5s) -->
+        <div class="sound-card" data-cat="dragon" id="card-4">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🦇</span>
+                        <span class="sound-tag tag-monster">Winged Beast</span>
+                    </div>
+                    <span class="duration-pill">⏱ 24.5s</span>
+                </div>
+                <div class="sound-name">Winged Dragon Screech &amp; Flight Swoop</div>
+                <div class="sound-desc">High-frequency screech and leather wing flurry as dragon takes flight from temple top.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/monster_screech_attack.mp3', 'Winged Dragon Screech', '24.5s beast screech and flight swoop', '🦇', 'card-4')">▶ Play (25s)</button>
+                <a class="btn-dl-card" href="audio/monster_screech_attack.mp3" download="monster_screech_attack.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 22. Wild Beast Roar Echo (16.2s) -->
+        <div class="sound-card" data-cat="dragon" id="card-2">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🐅</span>
+                        <span class="sound-tag tag-monster">Territorial Roar</span>
+                    </div>
+                    <span class="duration-pill">⏱ 16.2s</span>
+                </div>
+                <div class="sound-name">Wild Beast Roar Across Jungle Canopy</div>
+                <div class="sound-desc">Aggressive predator roar sequence echoing across thick canopy, signaling dominance.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/wild_beast_roar_echo.mp3', 'Wild Beast Roar Across Canopy', '16.2s predator roar across trees', '🐅', 'card-2')">▶ Play (16s)</button>
+                <a class="btn-dl-card" href="audio/wild_beast_roar_echo.mp3" download="wild_beast_roar_echo.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- ================= GIRL RUNNING & CHASE FOLEY ================= -->
+
+        <!-- 23. Running Through Forest (29.0s) -->
+        <div class="sound-card" data-cat="chase" id="card-run-forest">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🏃‍♀️</span>
+                        <span class="sound-tag tag-chase">Panic Running</span>
+                    </div>
+                    <span class="duration-pill">⏱ 29.0s</span>
+                </div>
+                <div class="sound-name">Girl Sprinting Frantically Through Forest</div>
+                <div class="sound-desc">Continuous 29s sprint: boots crushing leaves, whipping through branches, running for her life.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/running_through_forest.mp3', 'Girl Sprinting Through Forest', '29.0s frantic sprint through leaves and trees', '🏃‍♀️', 'card-run-forest')">▶ Play (29s)</button>
+                <a class="btn-dl-card" href="audio/running_through_forest.mp3" download="running_through_forest.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 24. Mud Footsteps Running (66.9s) -->
+        <div class="sound-card" data-cat="chase" id="card-8">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">👣</span>
+                        <span class="sound-tag tag-chase">Mud Sprint</span>
+                    </div>
+                    <span class="duration-pill">⏱ 66.9s</span>
+                </div>
+                <div class="sound-name">Footsteps Running in Deep Swamp Mud</div>
+                <div class="sound-desc">Full 67s sequence of squelching wet mud splashes and rapid desperate running through swamp.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/mud_footsteps_running.mp3', 'Running in Deep Mud', '66.9s panicked mud chase sequence', '👣', 'card-8')">▶ Play (67s)</button>
+                <a class="btn-dl-card" href="audio/mud_footsteps_running.mp3" download="mud_footsteps_running.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 25. Giant Monster Tremor Steps (18.0s) -->
+        <div class="sound-card" data-cat="chase" id="card-5">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🦖</span>
+                        <span class="sound-tag tag-chase">Monster Steps Behind</span>
+                    </div>
+                    <span class="duration-pill">⏱ 18.0s</span>
+                </div>
+                <div class="sound-name">Giant Monster Stomping Steps Behind Her</div>
+                <div class="sound-desc">Sub-bass ground-shaking foot thuds directly pursuing her, vibrating the earth with each stride.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/giant_monster_tremor_steps.mp3', 'Giant Monster Stomping Steps', '18.0s earth-shaking beast pursuit steps', '🦖', 'card-5')">▶ Play (18s)</button>
+                <a class="btn-dl-card" href="audio/giant_monster_tremor_steps.mp3" download="giant_monster_tremor_steps.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 26. Female Panic Gasp & Scared Breath -->
+        <div class="sound-card" data-cat="chase" id="card-gasp">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">😮</span>
+                        <span class="sound-tag tag-chase">Heroine Breath</span>
+                    </div>
+                    <span class="duration-pill">⏱ 2.3s</span>
+                </div>
+                <div class="sound-name">Female Sharp Panic Gasp &amp; Breath Inhale</div>
+                <div class="sound-desc">Heroine's startled sharp intake of breath when monster lunges from bushes.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/female_panic_gasp.mp3', 'Female Sharp Panic Gasp', 'Sharp panic gasp when beast appears', '😮', 'card-gasp')">▶ Play (2s)</button>
+                <a class="btn-dl-card" href="audio/female_panic_gasp.mp3" download="female_panic_gasp.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 27. Creature Heavy Guttural Breath (6.8s) -->
+        <div class="sound-card" data-cat="chase" id="card-breath">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">👹</span>
+                        <span class="sound-tag tag-chase">Beast Breath</span>
+                    </div>
+                    <span class="duration-pill">⏱ 6.8s</span>
+                </div>
+                <div class="sound-name">Creature Heavy Guttural Breathing</div>
+                <div class="sound-desc">Chilling predator lung respiration directly on the girl's neck while stalking.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/creature_heavy_breath.mp3', 'Creature Heavy Breath', '6.8s predator throat breathing behind tree', '👹', 'card-breath')">▶ Play (7s)</button>
+                <a class="btn-dl-card" href="audio/creature_heavy_breath.mp3" download="creature_heavy_breath.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 28. Jungle Monkey Screech & Theft -->
+        <div class="sound-card" data-cat="chase" id="card-monkey">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🐒</span>
+                        <span class="sound-tag tag-chase">Monkey Theft</span>
+                    </div>
+                    <span class="duration-pill">⏱ 2.9s</span>
+                </div>
+                <div class="sound-name">Jungle Monkey Screech &amp; Backpack Theft</div>
+                <div class="sound-desc">Mischievous primate chatter, excited screeches, and branch shakes stealing backpack.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/jungle_monkey_chatter.mp3', 'Jungle Monkey Screech', 'Primate chatter and branch shake backpack theft', '🐒', 'card-monkey')">▶ Play (3s)</button>
+                <a class="btn-dl-card" href="audio/jungle_monkey_chatter.mp3" download="jungle_monkey_chatter.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 29. Snapping Branch in Jungle (29.4s) -->
+        <div class="sound-card" data-cat="chase" id="card-6">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🪵</span>
+                        <span class="sound-tag tag-chase">Foley Snaps</span>
+                    </div>
+                    <span class="duration-pill">⏱ 29.4s</span>
+                </div>
+                <div class="sound-name">Snapping Branch in Jungle Ambience</div>
+                <div class="sound-desc">Continuous 30s jungle atmosphere with sharp sudden wood breaking in bushes.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/branch_break_crack.mp3', 'Snapping Branch Ambience', '29.4s wood breaking in bushes', '🪵', 'card-6')">▶ Play (29s)</button>
+                <a class="btn-dl-card" href="audio/branch_break_crack.mp3" download="branch_break_crack.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 30. Walking in Dry Forest Leaves (64.7s) -->
+        <div class="sound-card" data-cat="chase" id="card-7">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🍂</span>
+                        <span class="sound-tag tag-chase">Stalking Steps</span>
+                    </div>
+                    <span class="duration-pill">⏱ 64.7s</span>
+                </div>
+                <div class="sound-name">Walking in Dry Forest Leaves</div>
+                <div class="sound-desc">Full 1-minute realistic Foley recording of slow cautious steps crunching dry leaves.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/dry_leaves_stalking.mp3', 'Walking in Dry Leaves', '64.7s dry leaves walking foley', '🍂', 'card-7')">▶ Play (65s)</button>
+                <a class="btn-dl-card" href="audio/dry_leaves_stalking.mp3" download="dry_leaves_stalking.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- ================= SWAMP & CROCODILE ================= -->
+
+        <!-- 31. Prehistoric Apex Lizard Roar (10.3s) -->
+        <div class="sound-card" data-cat="swamp" id="card-3">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🦖</span>
+                        <span class="sound-tag tag-monster">Swamp Beast</span>
+                    </div>
+                    <span class="duration-pill">⏱ 10.3s</span>
+                </div>
+                <div class="sound-name">Giant Swamp Crocodile Attack Roar</div>
+                <div class="sound-desc">Low rumbling Jurassic reptile roar with bone-snapping jaws as croc lunges from water.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/dinosaur_predator_roar.mp3', 'Swamp Crocodile Attack Roar', '10.3s crocodile attack roar and jaw snap', '🦖', 'card-3')">▶ Play (10s)</button>
+                <a class="btn-dl-card" href="audio/dinosaur_predator_roar.mp3" download="dinosaur_predator_roar.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 32. Crocodile Swamp Ambience (43.2s) -->
+        <div class="sound-card" data-cat="swamp" id="card-9">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🐊</span>
+                        <span class="sound-tag tag-monster">Swamp Habitat</span>
+                    </div>
+                    <span class="duration-pill">⏱ 43.2s</span>
+                </div>
+                <div class="sound-name">Insects &amp; Frogs in Swamp Ambience</div>
+                <div class="sound-desc">Eerie wetland atmosphere with croaking bullfrogs, thick marsh water ripples, and sinister dread.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/swamp_croc_ambience.mp3', 'Swamp Ambience & Frogs', '43.2s marshland crocodile habitat', '🐊', 'card-9')">▶ Play (43s)</button>
+                <a class="btn-dl-card" href="audio/swamp_croc_ambience.mp3" download="swamp_croc_ambience.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 33. River Rapids & Water Surge (116.2s) -->
+        <div class="sound-card" data-cat="swamp" id="card-10">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🌊</span>
+                        <span class="sound-tag tag-jungle">River Surge</span>
+                    </div>
+                    <span class="duration-pill">⏱ 116.2s</span>
+                </div>
+                <div class="sound-name">River Surroundings &amp; Water Surge</div>
+                <div class="sound-desc">Full 2-minute continuous jungle river stream, rushing water current for boat crossing scenes.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/river_water_surge.mp3', 'River Water Surge', '116.2s jungle river flow and water ambience', '🌊', 'card-10')">▶ Play (116s)</button>
+                <a class="btn-dl-card" href="audio/river_water_surge.mp3" download="river_water_surge.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- ================= JUNGLE, RAIN & STORMS ================= -->
+
+        <!-- 34. Tropical Rainforest Heavy Rain (99.6s) -->
+        <div class="sound-card" data-cat="jungle" id="card-17">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🌧️</span>
+                        <span class="sound-tag tag-jungle">Full Atmos</span>
+                    </div>
+                    <span class="duration-pill">⏱ 99.6s</span>
+                </div>
+                <div class="sound-name">Tropical Rainforest Heavy Rain &amp; Storm</div>
+                <div class="sound-desc">Full 100-second 1.6MB field-recorded tropical downpour hitting thick foliage with distant wind.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/tropical_jungle_rain.mp3', 'Tropical Rainforest Heavy Rain', '99.6s continuous rainforest rain for Track 1', '🌧️', 'card-17')">▶ Play (100s)</button>
+                <a class="btn-dl-card" href="audio/tropical_jungle_rain.mp3" download="tropical_jungle_rain.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 35. Distant Thunder & Rainforest (61.5s) -->
+        <div class="sound-card" data-cat="jungle" id="card-18">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">⚡</span>
+                        <span class="sound-tag tag-jungle">Thunder Atmos</span>
+                    </div>
+                    <span class="duration-pill">⏱ 61.5s</span>
+                </div>
+                <div class="sound-name">Rainforest &amp; Distant Rolling Thunder</div>
+                <div class="sound-desc">Full 1-minute realistic ambient recording of humid jungle rain with deep rolling acoustic thunderclaps.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/rainforest_distant_thunder.mp3', 'Rainforest & Distant Thunder', '61.5s jungle rain with rolling thunderclaps', '⚡', 'card-18')">▶ Play (62s)</button>
+                <a class="btn-dl-card" href="audio/rainforest_distant_thunder.mp3" download="rainforest_distant_thunder.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 36. Night Jungle Insects & Crickets (170.5s) -->
+        <div class="sound-card" data-cat="jungle" id="card-20">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🦗</span>
+                        <span class="sound-tag tag-jungle">Night Atmos</span>
+                    </div>
+                    <span class="duration-pill">⏱ 170.5s</span>
+                </div>
+                <div class="sound-name">Eerie Night Jungle Crickets &amp; Insects</div>
+                <div class="sound-desc">Full 2.7MB 3-minute field recording of tropical night cicadas, frogs, and humid wind for night scenes.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/jungle_night_crickets.mp3', 'Night Jungle Crickets & Insects', '170.5s 2.7MB continuous night jungle recording', '🦗', 'card-20')">▶ Play (170s)</button>
+                <a class="btn-dl-card" href="audio/jungle_night_crickets.mp3" download="jungle_night_crickets.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 37. Violent Torrential Rainstorm (57.6s) -->
+        <div class="sound-card" data-cat="jungle" id="card-22">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">⛈️</span>
+                        <span class="sound-tag tag-jungle">Violent Gale</span>
+                    </div>
+                    <span class="duration-pill">⏱ 57.6s</span>
+                </div>
+                <div class="sound-name">Violent Torrential Jungle Rainstorm</div>
+                <div class="sound-desc">Almost a full minute of aggressive torrential storm rain and howling gale wind during climax battle.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/heavy_rain_storm.mp3', 'Violent Torrential Rainstorm', '57.6s intense storm rain and howling gale', '⛈️', 'card-22')">▶ Play (58s)</button>
+                <a class="btn-dl-card" href="audio/heavy_rain_storm.mp3" download="heavy_rain_storm.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 38. Scary Woods at Night (94.5s) -->
+        <div class="sound-card" data-cat="jungle" id="card-19">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🌲</span>
+                        <span class="sound-tag tag-jungle">Night Woods</span>
+                    </div>
+                    <span class="duration-pill">⏱ 94.5s</span>
+                </div>
+                <div class="sound-name">Scary Woods at Night &amp; Wind</div>
+                <div class="sound-desc">Full 95s eerie midnight forest atmosphere with rustling branches and chilling wind in ancient trees.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/scary_woods_night.mp3', 'Scary Woods at Night', '94.5s midnight forest wind and branches', '🌲', 'card-19')">▶ Play (95s)</button>
+                <a class="btn-dl-card" href="audio/scary_woods_night.mp3" download="scary_woods_night.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 39. Forest Wind Ambience (28.0s) -->
+        <div class="sound-card" data-cat="jungle" id="card-21">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">💨</span>
+                        <span class="sound-tag tag-jungle">Wind Breeze</span>
+                    </div>
+                    <span class="duration-pill">⏱ 28.0s</span>
+                </div>
+                <div class="sound-name">Breeze Through Ancient Ruins &amp; Trees</div>
+                <div class="sound-desc">Low whistling wind rushing through temple pillars and dense jungle foliage during exploration.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/forest_wind_ambience.mp3', 'Breeze Through Ancient Ruins', '28.0s whistling wind through temple foliage', '💨', 'card-21')">▶ Play (28s)</button>
+                <a class="btn-dl-card" href="audio/forest_wind_ambience.mp3" download="forest_wind_ambience.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- ================= SUSPENSE, TEMPLE & BRAAMS ================= -->
+
+        <!-- 40. Ancient Temple Stone Slide (5.3s) -->
+        <div class="sound-card" data-cat="suspense" id="card-stone">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🏛️</span>
+                        <span class="sound-tag tag-suspense">Temple Ruins</span>
+                    </div>
+                    <span class="duration-pill">⏱ 5.3s</span>
+                </div>
+                <div class="sound-name">Ancient Temple Stone Door Slide</div>
+                <div class="sound-desc">Heavy megalithic stone sliding, friction grating, and crumbling cavern dust as secret portal opens.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/temple_stone_slide.mp3', 'Temple Stone Door Slide', '5.3s heavy megalithic stone door friction', '🏛️', 'card-stone')">▶ Play (5s)</button>
+                <a class="btn-dl-card" href="audio/temple_stone_slide.mp3" download="temple_stone_slide.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 41. Fast Panic Heartbeat (19.5s) -->
+        <div class="sound-card" data-cat="suspense" id="card-11">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">💓</span>
+                        <span class="sound-tag tag-suspense">Panic Pulse</span>
+                    </div>
+                    <span class="duration-pill">⏱ 19.5s</span>
+                </div>
+                <div class="sound-name">Fast Panic Heartbeat (Sub-Bass)</div>
+                <div class="sound-desc">Rapid 19.5s acoustic chest thuds with visceral sub-bass pulse when heroine hides behind roots.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/fast_panic_heartbeat.mp3', 'Fast Panic Heartbeat', '19.5s rapid chest heartbeat sub-bass', '💓', 'card-11')">▶ Play (20s)</button>
+                <a class="btn-dl-card" href="audio/fast_panic_heartbeat.mp3" download="fast_panic_heartbeat.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 42. Cinematic Horror Heartbeat Drone (84.7s) -->
+        <div class="sound-card" data-cat="suspense" id="card-12">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🫀</span>
+                        <span class="sound-tag tag-suspense">Horror Pulse</span>
+                    </div>
+                    <span class="duration-pill">⏱ 84.7s</span>
+                </div>
+                <div class="sound-name">Cinematic Horror Heartbeat Drone</div>
+                <div class="sound-desc">Slow, massive 85-second heartbeat integrated with ominous horror drone and rising tension.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/cinematic_horror_heartbeat.mp3', 'Cinematic Horror Heartbeat Drone', '84.7s slow dread heartbeat and rising tension', '🫀', 'card-12')">▶ Play (85s)</button>
+                <a class="btn-dl-card" href="audio/cinematic_horror_heartbeat.mp3" download="cinematic_horror_heartbeat.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 43. Hollywood Apocalypse Braam (34.4s) -->
+        <div class="sound-card" data-cat="suspense" id="card-13">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">📢</span>
+                        <span class="sound-tag tag-suspense">Apocalypse Horn</span>
+                    </div>
+                    <span class="duration-pill">⏱ 34.4s</span>
+                </div>
+                <div class="sound-name">Cinematic Apocalypse Braam &amp; Horn</div>
+                <div class="sound-desc">Hans Zimmer style seismic trailer horn braam with low subterranean bass decay that shakes headphones.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/hollywood_apocalypse_braam.mp3', 'Cinematic Apocalypse Braam', '34.4s Hans Zimmer trailer horn and sub decay', '📢', 'card-13')">▶ Play (34s)</button>
+                <a class="btn-dl-card" href="audio/hollywood_apocalypse_braam.mp3" download="hollywood_apocalypse_braam.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 44. Warfare Horn Trailer Hit (19.5s) -->
+        <div class="sound-card" data-cat="suspense" id="card-14">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">💥</span>
+                        <span class="sound-tag tag-suspense">Trailer Hit</span>
+                    </div>
+                    <span class="duration-pill">⏱ 19.5s</span>
+                </div>
+                <div class="sound-name">Warfare Horn Trailer Hit &amp; Boom</div>
+                <div class="sound-desc">Deep explosive trailer impact followed by a menacing brass drone for sudden monster reveals.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/cinematic_sub_impact.mp3', 'Warfare Horn Trailer Hit', '19.5s explosive trailer impact and brass drone', '💥', 'card-14')">▶ Play (20s)</button>
+                <a class="btn-dl-card" href="audio/cinematic_sub_impact.mp3" download="cinematic_sub_impact.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 45. Blockbuster Deep Drum Suspense (26.2s) -->
+        <div class="sound-card" data-cat="suspense" id="card-15">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🥁</span>
+                        <span class="sound-tag tag-suspense">Deep Drums</span>
+                    </div>
+                    <span class="duration-pill">⏱ 26.2s</span>
+                </div>
+                <div class="sound-name">Blockbuster Sci-Fi Deep Drum Roll</div>
+                <div class="sound-desc">Pounding acoustic cinematic war drums building continuous rhythm during pursuit and escape sequences.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/blockbuster_suspense_drums.mp3', 'Blockbuster Deep Drum Roll', '26.2s cinematic war drums for escape sequences', '🥁', 'card-15')">▶ Play (26s)</button>
+                <a class="btn-dl-card" href="audio/blockbuster_suspense_drums.mp3" download="blockbuster_suspense_drums.mp3">📥 Download</a>
+            </div>
+        </div>
+
+        <!-- 46. Dark Horror Ambience Background Score (159.5s) -->
+        <div class="sound-card" data-cat="suspense" id="card-16">
+            <div>
+                <div class="sound-header">
+                    <div class="header-left">
+                        <span class="sound-icon">🎻</span>
+                        <span class="sound-tag tag-suspense">Horror Score</span>
+                    </div>
+                    <span class="duration-pill">⏱ 159.5s</span>
+                </div>
+                <div class="sound-name">Dark Horror Ambience Background Score</div>
+                <div class="sound-desc">Full 2.5-minute continuous dark horror ambient music for underlying movie suspense on Track 2.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-play-card" onclick="playTrack('audio/horror_suspense_drone.mp3', 'Dark Horror Ambience Score', '159.5s continuous dark ambient background music', '🎻', 'card-16')">▶ Play (160s)</button>
+                <a class="btn-dl-card" href="audio/horror_suspense_drone.mp3" download="horror_suspense_drone.mp3">📥 Download</a>
+            </div>
+        </div>
+
+    </div>
+    </div> <!-- end sec-hollywood -->
+
+</div>
+
+<script>
+    const audio = document.getElementById('native-audio');
+    const timeDisplay = document.getElementById('time-display');
+    const progressFill = document.getElementById('progress-fill');
+    const progressContainer = document.getElementById('progress-container');
+    const canvas = document.getElementById('visualizer');
+    const ctx = canvas.getContext('2d');
+
+    let activeCardId = null;
+    let activeBtn = null;
+    let animId = null;
+
+    function formatTime(sec) {
+        if (isNaN(sec) || sec === Infinity) return "00:00";
+        const m = Math.floor(sec / 60);
+        const s = Math.floor(sec % 60);
+        return `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    function playTrack(url, title, desc, icon, cardId) {
+        // If clicking currently playing track -> pause it
+        if (!audio.paused && activeCardId === cardId) {
+            audio.pause();
+            if (activeBtn) activeBtn.textContent = activeBtn.getAttribute('data-original') || "▶ Play";
+            if (activeBtn) activeBtn.classList.remove('playing');
+            stopVisualizer();
+            return;
+        }
+
+        // Reset previous button
+        if (activeBtn) {
+            activeBtn.textContent = activeBtn.getAttribute('data-original') || "▶ Play";
+            activeBtn.classList.remove('playing');
+        }
+        if (activeCardId) {
+            const el = document.getElementById(activeCardId);
+            if (el) el.classList.remove('active-card');
+        }
+
+        const btn = document.querySelector(`#${cardId} .btn-play-card`) || document.querySelector(`#${cardId} .btn-banner-play`);
+        activeBtn = btn;
+        activeCardId = cardId;
+
+        if (btn) {
+            btn.textContent = "⏹ Stop";
+            btn.classList.add('playing');
+        }
+        const card = document.getElementById(cardId);
+        if (card) card.classList.add('active-card');
+
+        document.getElementById('now-title').textContent = title;
+        document.getElementById('now-desc').textContent = desc;
+        document.getElementById('now-icon').textContent = icon;
+
+        audio.src = url;
+        audio.play().then(() => {
+            startVisualizer();
+        }).catch(err => {
+            console.error("Playback error:", err);
+        });
+    }
+
+    audio.ontimeupdate = () => {
+        const cur = audio.currentTime;
+        const dur = audio.duration;
+        timeDisplay.textContent = `${formatTime(cur)} / ${formatTime(dur)}`;
+        if (dur > 0) {
+            progressFill.style.width = `${(cur / dur) * 100}%`;
+        }
+    };
+
+    audio.onended = () => {
+        if (activeBtn) {
+            activeBtn.textContent = activeBtn.getAttribute('data-original') || "▶ Play";
+            activeBtn.classList.remove('playing');
+        }
+        if (activeCardId) {
+            const el = document.getElementById(activeCardId);
+            if (el) el.classList.remove('active-card');
+        }
+        progressFill.style.width = "0%";
+        timeDisplay.textContent = "00:00 / 00:00";
+        stopVisualizer();
+    };
+
+    function seekAudio(e) {
+        if (!audio.duration) return;
+        const rect = progressContainer.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+        audio.currentTime = ratio * audio.duration;
+    }
+
+    function startVisualizer() {
+        if (animId) cancelAnimationFrame(animId);
+        function draw() {
+            animId = requestAnimationFrame(draw);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const bars = 24;
+            const barWidth = canvas.width / bars - 2;
+
+            for (let i = 0; i < bars; i++) {
+                const h = Math.random() * (canvas.height * 0.8) + 4;
+                const grad = ctx.createLinearGradient(0, canvas.height, 0, 0);
+                grad.addColorStop(0, '#00f2fe');
+                grad.addColorStop(1, '#ff2a5f');
+                ctx.fillStyle = grad;
+                ctx.fillRect(i * (barWidth + 2), canvas.height - h, barWidth, h);
+            }
+        }
+        draw();
+    }
+
+    function stopVisualizer() {
+        if (animId) cancelAnimationFrame(animId);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function filterSounds(category, btn) {
+        document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+
+        const secOfficial = document.getElementById('sec-official');
+        const secHollywood = document.getElementById('sec-hollywood');
+
+        if (category === 'all') {
+            if (secOfficial) secOfficial.style.display = 'block';
+            if (secHollywood) secHollywood.style.display = 'block';
+            document.querySelectorAll('.sound-card').forEach(c => c.style.display = 'flex');
+            return;
+        }
+
+        if (category === 'official') {
+            if (secOfficial) secOfficial.style.display = 'block';
+            if (secHollywood) secHollywood.style.display = 'none';
+            document.querySelectorAll('#sec-official .sound-card').forEach(c => c.style.display = 'flex');
+            return;
+        }
+
+        // Hollywood categories
+        if (secOfficial) secOfficial.style.display = 'none';
+        if (secHollywood) secHollywood.style.display = 'block';
+        document.querySelectorAll('#sec-hollywood .sound-card').forEach(card => {
+            if (card.getAttribute('data-cat') === category) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // Cache original button text
+    document.querySelectorAll('.btn-play-card, .btn-banner-play').forEach(b => {
+        b.setAttribute('data-original', b.textContent.trim());
+    });
+</script>
+
+</body>
+</html>
